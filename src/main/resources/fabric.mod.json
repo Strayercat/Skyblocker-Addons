@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "skyblocker-shortcut-case-fix",
+  "version": "${version}",
+  "name": "Skyblocker Shortcut Case Fix",
+  "description": "Makes Skyblocker command shortcuts case-insensitive.",
+  "authors": ["Strayer"],
+  "license": "MIT",
+  "environment": "client",
+  "mixins": [
+    {
+      "config": "skyblocker-shortcut-case-fix.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*",
+    "skyblocker": "*"
+  }
+}
