@@ -1,15 +1,22 @@
 {
   "schemaVersion": 1,
-  "id": "skyblocker-shortcut-case-fix",
+  "id": "skyblocker-addons",
   "version": "${version}",
-  "name": "Skyblocker Shortcut Case Fix",
-  "description": "Makes Skyblocker command shortcuts case-insensitive.",
+  "name": "Skyblocker Addons",
+  "description": "Small additions and fixes for Skyblocker: case-insensitive command shortcuts and slayer session stats in the Slayer HUD.",
   "authors": ["Strayer"],
+  "contact": {
+    "sources": "https://github.com/Strayercat/Skyblocker-Addons"
+  },
   "license": "MIT",
+  "icon": "assets/skyblocker-addons/icon.png",
   "environment": "client",
+  "entrypoints": {
+    "client": ["com.skyblockeraddons.client.SkyblockerAddonsClient"]
+  },
   "mixins": [
     {
-      "config": "skyblocker-shortcut-case-fix.client.mixins.json",
+      "config": "skyblocker-addons.client.mixins.json",
       "environment": "client"
     }
   ],

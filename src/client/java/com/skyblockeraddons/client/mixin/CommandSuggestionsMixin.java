@@ -1,4 +1,4 @@
-package com.skyblockershortcutcasefix.client.mixin;
+package com.skyblockeraddons.client.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -18,7 +18,7 @@ public abstract class CommandSuggestionsMixin {
             method = "updateCommandInfo",
             at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/CommandDispatcher;parse(Lcom/mojang/brigadier/StringReader;Ljava/lang/Object;)Lcom/mojang/brigadier/ParseResults;")
     )
-    private ParseResults<ClientSuggestionProvider> shortcutcasefix$caseInsensitiveParse(CommandDispatcher<ClientSuggestionProvider> dispatcher, StringReader reader, Object source, Operation<ParseResults<ClientSuggestionProvider>> original) {
+    private ParseResults<ClientSuggestionProvider> skyblockeraddons$caseInsensitiveParse(CommandDispatcher<ClientSuggestionProvider> dispatcher, StringReader reader, Object source, Operation<ParseResults<ClientSuggestionProvider>> original) {
         ParseResults<ClientSuggestionProvider> result = original.call(dispatcher, reader, source);
         if (!result.getContext().getNodes().isEmpty()) return result;
 

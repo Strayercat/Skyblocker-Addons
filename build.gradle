@@ -21,7 +21,7 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        "skyblocker-shortcut-case-fix" {
+        "skyblocker-addons" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }

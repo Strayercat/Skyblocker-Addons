@@ -1,4 +1,4 @@
-package com.skyblockershortcutcasefix.client.mixin;
+package com.skyblockeraddons.client.mixin;
 
 import de.hysky.skyblocker.skyblock.shortcut.Shortcuts;
 import de.hysky.skyblocker.skyblock.shortcut.ShortcutsConfigListWidget;
@@ -20,19 +20,19 @@ public abstract class ShortcutsConfigScreenMixin {
     protected abstract void checkForDuplicates();
 
     @Unique
-    private Boolean shortcutcasefix$lastDuplicates;
+    private Boolean skyblockeraddons$lastDuplicates;
 
     @Inject(method = "updateButtons", at = @At("TAIL"))
-    private void shortcutcasefix$resetDuplicateState(CallbackInfo ci) {
-        shortcutcasefix$lastDuplicates = null;
+    private void skyblockeraddons$resetDuplicateState(CallbackInfo ci) {
+        skyblockeraddons$lastDuplicates = null;
     }
 
     @Inject(method = "extractRenderState", at = @At("HEAD"))
-    private void shortcutcasefix$liveDuplicateCheck(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+    private void skyblockeraddons$liveDuplicateCheck(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
         if (!Shortcuts.isShortcutsLoaded()) return;
-        boolean duplicates = ((ShortcutsConfigListWidgetInvoker) shortcutsConfigListWidget).shortcutcasefix$hasDuplicates();
-        if (shortcutcasefix$lastDuplicates == null || duplicates != shortcutcasefix$lastDuplicates) {
-            shortcutcasefix$lastDuplicates = duplicates;
+        boolean duplicates = ((ShortcutsConfigListWidgetInvoker) shortcutsConfigListWidget).skyblockeraddons$hasDuplicates();
+        if (skyblockeraddons$lastDuplicates == null || duplicates != skyblockeraddons$lastDuplicates) {
+            skyblockeraddons$lastDuplicates = duplicates;
             checkForDuplicates();
         }
     }

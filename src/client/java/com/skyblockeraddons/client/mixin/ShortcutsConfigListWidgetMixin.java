@@ -1,4 +1,4 @@
-package com.skyblockershortcutcasefix.client.mixin;
+package com.skyblockeraddons.client.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import de.hysky.skyblocker.skyblock.shortcut.ShortcutsConfigListWidget;
@@ -13,7 +13,7 @@ public abstract class ShortcutsConfigListWidgetMixin {
             method = "hasDuplicates",
             at = @At(value = "INVOKE", target = "Lde/hysky/skyblocker/skyblock/shortcut/ShortcutsConfigListWidget$ShortcutEntry;key()Ljava/lang/String;")
     )
-    private String shortcutcasefix$caseInsensitiveKey(String key) {
+    private String skyblockeraddons$caseInsensitiveKey(String key) {
         return key.toLowerCase(Locale.ROOT);
     }
 }

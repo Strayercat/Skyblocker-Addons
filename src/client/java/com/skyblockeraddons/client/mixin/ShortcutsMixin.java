@@ -1,4 +1,4 @@
-package com.skyblockershortcutcasefix.client.mixin;
+package com.skyblockeraddons.client.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -24,26 +24,26 @@ import java.util.concurrent.CompletableFuture;
 @Mixin(value = Shortcuts.class, remap = false)
 public abstract class ShortcutsMixin {
     @Unique
-    private static final Logger shortcutcasefix$LOGGER = LoggerFactory.getLogger("skyblocker-shortcut-case-fix");
+    private static final Logger skyblockeraddons$LOGGER = LoggerFactory.getLogger("skyblocker-addons");
 
     @WrapOperation(
             method = "init",
             at = @At(value = "INVOKE", target = "Lde/hysky/skyblocker/utils/data/JsonData;init()Ljava/util/concurrent/CompletableFuture;")
     )
-    private static CompletableFuture<Void> shortcutcasefix$dedupeOnLoad(JsonData<?> instance, Operation<CompletableFuture<Void>> original) {
+    private static CompletableFuture<Void> skyblockeraddons$dedupeOnLoad(JsonData<?> instance, Operation<CompletableFuture<Void>> original) {
         return original.call(instance).thenRun(() -> {
             try {
                 Shortcuts.ShortcutsRecord data = Shortcuts.shortcuts.getData();
-                int removed = shortcutcasefix$dedupe(data.commands(), "command") + shortcutcasefix$dedupe(data.commandArgs(), "command argument");
+                int removed = skyblockeraddons$dedupe(data.commands(), "command") + skyblockeraddons$dedupe(data.commandArgs(), "command argument");
                 if (removed > 0) Shortcuts.shortcuts.save();
             } catch (Exception e) {
-                shortcutcasefix$LOGGER.error("Failed to remove case-duplicate shortcuts", e);
+                skyblockeraddons$LOGGER.error("Failed to remove case-duplicate shortcuts", e);
             }
         });
     }
 
     @Unique
-    private static int shortcutcasefix$dedupe(Map<String, String> map, String type) {
+    private static int skyblockeraddons$dedupe(Map<String, String> map, String type) {
         Map<String, String> kept = new HashMap<>();
         map.keySet().stream().sorted().forEach(key -> {
             String lower = key.toLowerCase(Locale.ROOT);
@@ -52,7 +52,7 @@ public abstract class ShortcutsMixin {
         Set<String> survivors = new HashSet<>(kept.values());
         List<String> toRemove = map.keySet().stream().filter(k -> !survivors.contains(k)).toList();
         for (String key : toRemove) {
-            shortcutcasefix$LOGGER.info("Removed case-duplicate {} shortcut {} -> {} (kept {})", type, key, map.get(key), kept.get(key.toLowerCase(Locale.ROOT)));
+            skyblockeraddons$LOGGER.info("Removed case-duplicate {} shortcut {} -> {} (kept {})", type, key, map.get(key), kept.get(key.toLowerCase(Locale.ROOT)));
             map.remove(key);
         }
         return toRemove.size();
@@ -62,12 +62,12 @@ public abstract class ShortcutsMixin {
             method = "registerCommands",
             at = @At(value = "INVOKE", target = "Lnet/fabricmc/fabric/api/client/command/v2/ClientCommands;literal(Ljava/lang/String;)Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;")
     )
-    private static String shortcutcasefix$lowercaseRegistration(String name) {
+    private static String skyblockeraddons$lowercaseRegistration(String name) {
         return name.toLowerCase(Locale.ROOT);
     }
 
-    @ModifyVariable(method = "modifyCommand", at = @At("HEAD"), argsOnly = true)
-    private static String shortcutcasefix$lowercaseCommandName(String command) {
+    @ModifyVariable(method = "modifyCommand", at = @At("HEAD"), argsOnly = true, name = "command")
+    private static String skyblockeraddons$lowercaseCommandName(String command) {
         int space = command.indexOf(' ');
         if (space == -1) return command.toLowerCase(Locale.ROOT);
         return command.substring(0, space).toLowerCase(Locale.ROOT) + command.substring(space);
@@ -77,7 +77,7 @@ public abstract class ShortcutsMixin {
             method = "modifyCommand",
             at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;getOrDefault(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;")
     )
-    private static Object shortcutcasefix$caseInsensitiveLookup(Object2ObjectMap<Object, Object> map, Object key, Object defaultValue, Operation<Object> original) {
+    private static Object skyblockeraddons$caseInsensitiveLookup(Object2ObjectMap<Object, Object> map, Object key, Object defaultValue, Operation<Object> original) {
         Object exact = map.get(key);
         if (exact != null) return exact;
         if (key instanceof String s) {
